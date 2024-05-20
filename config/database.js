@@ -1,10 +1,12 @@
 const { MongoClient } = require('mongodb')
 
-let host = 'localhost';
+let host = process.env.DB_HOST;
 
-let port = '27017';
+let port = process.env.DB_PORT;
 
-let protocol = 'mongodb'
+let protocol = process.env.DB_CONNECTION;
+
+let databaseName = process.env.DB_DATABASE;
 
 let databaseString = `${protocol}://${host}:${port}`
 
@@ -16,7 +18,7 @@ async function connectToDatabase() {
     try {
         connection = await client.connect();
 
-        const db = connection.db('bloggy')
+        const db = connection.db(databaseName)
 
         return db;
     } catch (error) {
